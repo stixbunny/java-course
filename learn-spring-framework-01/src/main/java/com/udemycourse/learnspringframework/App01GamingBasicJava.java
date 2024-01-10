@@ -1,9 +1,7 @@
 package com.udemycourse.learnspringframework;
 
 import com.udemycourse.learnspringframework.game.GameRunner;
-import com.udemycourse.learnspringframework.game.MarioGame;
 import com.udemycourse.learnspringframework.game.PacManGame;
-import com.udemycourse.learnspringframework.game.SuperContraGame;
 
 public class App01GamingBasicJava {
   public static void main(String[] args) {
