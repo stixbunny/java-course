@@ -1,5 +1,6 @@
 package com.udemycourse.learnspringframework.game;
-import org.springframework.stereotype.Component;;
+import org.springframework.stereotype.Component;
+
 @Component
 public class PacManGame implements GamingConsole {
   public void up() {
