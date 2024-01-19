@@ -11,7 +11,6 @@ public class LoginController {
   @RequestMapping("login")
   public String loginJsp(@RequestParam String name, ModelMap model) {
     model.put("name", name);
-    System.out.println("Request param is " + name);
     return "login";
   }
 
