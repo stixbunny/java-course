@@ -4,7 +4,11 @@
   <title>login JSP page</title>
 </head>
 <body>
-  <p>Welcome to te login</p>
-  Your name is ${name}!
+  <p>Welcome to the login page!</p>
+  <form method="post">
+    <p>Name: <input type="text" name="name"></p>
+    <p>Password: <input type="password" name="password"></p>
+    <button type="submit">Send</button>
+  </form>
 </body>
 </html>
