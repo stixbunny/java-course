@@ -16,6 +16,7 @@
       <p>Enter details</p>
       <form:form method="post" modelAttribute="todo">
         <p>Description: <form:input type="text" path="description" required="required" /></p>
+        <p><form:errors path="description" cssClass="text-warning" /></p>
         <form:input type="hidden" path="id" />
         <form:input type="hidden" path="done" />
         <button type="submit" class="btn btn-success">Create</button>
