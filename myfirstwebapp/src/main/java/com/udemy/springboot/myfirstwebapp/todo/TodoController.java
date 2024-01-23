@@ -3,6 +3,7 @@ package com.udemy.springboot.myfirstwebapp.todo;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -25,14 +26,19 @@ public class TodoController {
 
   @RequestMapping(value = "list-todos", method = RequestMethod.GET)
   public String listAllTodos(ModelMap model) {
-    List<Todo> todos = todoService.findByUsername("stixbunny");
+    String username = getLoggedinUsername(model);
+    List<Todo> todos = todoService.findByUsername(username);
     model.addAttribute("todos", todos);
     return "listTodos";
   }
 
+  private String getLoggedinUsername(ModelMap model) {
+    return SecurityContextHolder.getContext().getAuthentication().getName();
+  }
+
   @RequestMapping(value = "add-todo", method = RequestMethod.GET)
   public String newTodo(ModelMap model) {
-    String username = (String) model.get("name");
+    String username = getLoggedinUsername(model);
     Todo todo = new Todo(0, username, "", LocalDate.now().plusYears(1), false);
     model.put("todo", todo);
     return "todo";
@@ -71,5 +77,7 @@ public class TodoController {
     todoService.updateTodo(todo);
     return "redirect:list-todos";
   }
+
+
 
 }
