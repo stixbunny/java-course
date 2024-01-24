@@ -49,7 +49,7 @@ public class TodoControllerJpa {
     if (result.hasErrors()) {
       return "todo";
     }
-    String username = (String) model.get("name");
+    String username = getLoggedinUsername(model);
     todo.setUsername(username);
     todoRepository.save(todo);
     return "redirect:list-todos";
@@ -73,7 +73,7 @@ public class TodoControllerJpa {
     if (result.hasErrors()) {
       return "todo";
     }
-    String username = (String) model.get("name");
+    String username = getLoggedinUsername(model);
     todo.setUsername(username);
     todoRepository.save(todo);
     return "redirect:list-todos";
