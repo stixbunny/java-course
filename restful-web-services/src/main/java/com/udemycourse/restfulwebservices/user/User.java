@@ -1,13 +1,16 @@
 package com.udemycourse.restfulwebservices.user;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
@@ -17,13 +20,17 @@ public class User {
   @GeneratedValue
   private Integer id;
 
-  @Size(min=2, message="Name should have at least 2 characters")
+  @Size(min = 2, message = "Name should have at least 2 characters")
   @JsonProperty("user_name")
   private String name;
 
   @Past(message = "Birthdate should be a date in the past")
   @JsonProperty("birth_date")
   private LocalDate birthDay;
+
+  @OneToMany(mappedBy = "user")
+  @JsonIgnore
+  private List<Post> posts;
 
   public User() {
   }
