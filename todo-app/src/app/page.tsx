@@ -1,5 +1,6 @@
-'use client';
+"use client";
 import { Component } from "react";
+import TestComponent from "@/components/TestComponent";
 
 function FirstComponent() {
   return <div>First Component</div>;
@@ -28,6 +29,9 @@ export default function Home() {
       <SecondComponent />
       <ThirdComponent />
       <FourthComponent />
+      <TestComponent increment={1}/>
+      <TestComponent increment={2}/>
+      <TestComponent increment={3}/>
     </main>
   );
 }
