@@ -1,11 +1,16 @@
 "use client";
-import { Component } from "react";
+import { ChangeEvent, Component, useState } from "react";
 import CounterButtons from "@/components/CounterButtons";
 import Counter from "@/components/Counter";
 import ResetCounterButton from "@/components/ResetCounterButton";
 import { CounterProvider } from "@/context/CounterProvider";
 
 export default function Home() {
+  const [form, setForm] = useState({
+    username: "",
+    password: "",
+  });
+
   return (
     <main className="flex flex-col min-h-screen p-24 gap-3">
       <div className="w-full max-w-xs mx-auto">
@@ -25,6 +30,8 @@ export default function Home() {
               id="username"
               type="text"
               placeholder="Username"
+              onChange={(e) => setForm({ ...form, username: e.target.value })}
+              value={form.username}
             />
           </div>
 
@@ -40,10 +47,15 @@ export default function Home() {
               id="password"
               type="password"
               placeholder="********"
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              value={form.password}
             />
           </div>
           <div className="flex items-center justify-between gap-2">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold  py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold  py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="button"
+            >
               Sign In
             </button>
           </div>
