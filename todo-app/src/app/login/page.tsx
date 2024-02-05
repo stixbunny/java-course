@@ -1,9 +1,6 @@
 "use client";
-import { ChangeEvent, Component, useState } from "react";
-import CounterButtons from "@/components/CounterButtons";
-import Counter from "@/components/Counter";
-import ResetCounterButton from "@/components/ResetCounterButton";
-import { CounterProvider } from "@/context/CounterProvider";
+import { useState } from "react";
+import { redirect, useRouter } from "next/navigation";
 
 export default function Home() {
   type successType = 0 | 1 | 2 | 3; // unset, success, username fail, password fail
@@ -17,11 +14,14 @@ export default function Home() {
     password: "",
   });
 
+  const router = useRouter();
+
   const [success, setSuccess] = useState<successType>(0);
 
   function handleSignIn() {
     if (form.username === "stixbunny" && form.password === "password") {
       setSuccess(1);
+      router.push('/welcome');
     } else if (form.username === "stixbunny") {
       setSuccess(3);
     } else {
@@ -50,59 +50,57 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col min-h-screen p-24 gap-3">
-      <div className="w-full max-w-xs mx-auto">
-        <form
-          action="post"
-          className="flex flex-col gap-4 bg-white shadow-md rounded p-6 mb-4"
-        >
-          <SuccessMessage />
-          <div className="flex flex-col gap-2">
-            <label
-              className="block text-gray-700 text-sm font-bold"
-              htmlFor="username"
-            >
-              Username
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              type="text"
-              placeholder="Username"
-              onChange={(e) => setForm({ ...form, username: e.target.value })}
-              value={form.username}
-            />
-            <CustomErrorMessage message="Wrong username." errorCode={2} />
-          </div>
+    <div className="w-full max-w-xs mx-auto">
+      <form
+        action="post"
+        className="flex flex-col gap-4 bg-white shadow-md rounded p-6 mb-4"
+      >
+        <SuccessMessage />
+        <div className="flex flex-col gap-2">
+          <label
+            className="block text-gray-700 text-sm font-bold"
+            htmlFor="username"
+          >
+            Username
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username"
+            type="text"
+            placeholder="Username"
+            onChange={(e) => setForm({ ...form, username: e.target.value })}
+            value={form.username}
+          />
+          <CustomErrorMessage message="Wrong username." errorCode={2} />
+        </div>
 
-          <div className="flex flex-col gap-2">
-            <label
-              className="block text-gray-700 text-sm font-bold"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
-              placeholder="********"
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              value={form.password}
-            />
-            <CustomErrorMessage message="Wrong password." errorCode={3} />
-          </div>
-          <div className="flex items-center justify-between gap-2">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold  py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
-              onClick={handleSignIn}
-            >
-              Sign In
-            </button>
-          </div>
-        </form>
-      </div>
-    </main>
+        <div className="flex flex-col gap-2">
+          <label
+            className="block text-gray-700 text-sm font-bold"
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="password"
+            type="password"
+            placeholder="********"
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            value={form.password}
+          />
+          <CustomErrorMessage message="Wrong password." errorCode={3} />
+        </div>
+        <div className="flex items-center justify-between gap-2">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold  py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+            onClick={handleSignIn}
+          >
+            Sign In
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
