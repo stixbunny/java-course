@@ -6,10 +6,48 @@ import ResetCounterButton from "@/components/ResetCounterButton";
 import { CounterProvider } from "@/context/CounterProvider";
 
 export default function Home() {
+  type successType = 0 | 1 | 2 | 3; // unset, success, username fail, password fail
+  type error = {
+    message: string;
+    errorCode: successType;
+  };
+
   const [form, setForm] = useState({
     username: "",
     password: "",
   });
+
+  const [success, setSuccess] = useState<successType>(0);
+
+  function handleSignIn() {
+    if (form.username === "stixbunny" && form.password === "password") {
+      setSuccess(1);
+    } else if (form.username === "stixbunny") {
+      setSuccess(3);
+    } else {
+      setSuccess(2);
+    }
+  }
+
+  function CustomErrorMessage(error: error) {
+    if (success === error.errorCode) {
+      return (
+        <div className="errorMessage text-red-500 text-xs italic">
+          {error.message}
+        </div>
+      );
+    }
+  }
+
+  function SuccessMessage() {
+    if (success === 1) {
+      return (
+        <div className="successMessage text-blue-500 text-xs italic font-bold">
+          Authenticated successfully!
+        </div>
+      );
+    }
+  }
 
   return (
     <main className="flex flex-col min-h-screen p-24 gap-3">
@@ -18,6 +56,7 @@ export default function Home() {
           action="post"
           className="flex flex-col gap-4 bg-white shadow-md rounded p-6 mb-4"
         >
+          <SuccessMessage />
           <div className="flex flex-col gap-2">
             <label
               className="block text-gray-700 text-sm font-bold"
@@ -33,6 +72,7 @@ export default function Home() {
               onChange={(e) => setForm({ ...form, username: e.target.value })}
               value={form.username}
             />
+            <CustomErrorMessage message="Wrong username." errorCode={2} />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -50,11 +90,13 @@ export default function Home() {
               onChange={(e) => setForm({ ...form, password: e.target.value })}
               value={form.password}
             />
+            <CustomErrorMessage message="Wrong password." errorCode={3} />
           </div>
           <div className="flex items-center justify-between gap-2">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold  py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
+              onClick={handleSignIn}
             >
               Sign In
             </button>
