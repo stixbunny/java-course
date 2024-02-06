@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className + " text-text bg-background"}>
         <div className="app flex flex-col gap-4 p-5 h-screen">
           <TheHeader />
           <Providers>

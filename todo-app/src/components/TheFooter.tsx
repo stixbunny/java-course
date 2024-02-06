@@ -1,7 +1,7 @@
 export default function TheFooter() {
   return (
-    <div>
+    <footer>
       Footer <br />
-    </div>
+    </footer>
   );
 }

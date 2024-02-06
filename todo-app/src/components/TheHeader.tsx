@@ -1,7 +1,7 @@
 export default function TheHeader() {
   return (
-    <div>
+    <header>
       Header <br />
-    </div>
+    </header>
   );
 }
