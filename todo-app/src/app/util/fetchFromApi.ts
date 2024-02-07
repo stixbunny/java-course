@@ -1,5 +1,5 @@
 import Todo from "@/types/todo";
-import fetchJson from "./fetchJson";
+import { fetchDelete, fetchJson, fetchWithErrors } from "./customFetch";
 
 export async function fetchHelloPath(variable: string) {
   const json = await fetchJson(
@@ -16,4 +16,10 @@ export async function fetchHelloWorldBean() {
 export async function fetchTodos(username: string): Promise<Todo[]> {
   const json = await fetchJson(`http://localhost:8080/users/${username}/todos`);
   return json;
+}
+
+export async function deleteTodo(username: string, id: number) {
+  const response = fetchDelete(
+    `http://localhost:8080/users/${username}/todos/${id}`
+  );
 }
