@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import fetchJson from "./util/fetchJson";
-import { fetchHelloPath, fetchHelloWorldBean } from "./util/fetchFromApi";
+import {
+  fetchHelloPath,
+  fetchHelloWorldBean,
+  fetchTodos,
+} from "./util/fetchFromApi";
 
 export default function Home() {
   const [message, setMessage] = useState("");

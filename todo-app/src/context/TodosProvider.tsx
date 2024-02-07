@@ -6,6 +6,7 @@ import {
   useContext,
   useState,
 } from "react";
+import type Todo from "@/types/todo";
 
 type Props = {
   children: ReactNode;
@@ -16,33 +17,11 @@ type TodosState = {
   setTodos: Dispatch<SetStateAction<Todo[]>>;
 };
 
-type Todo = {
-  id: number;
-  description: string;
-  done: boolean;
-  targetDate: Date;
-};
-
 const Context = createContext<TodosState | undefined>(undefined);
 
 export function TodosProvider({ children }: Props) {
-  const today = new Date();
-  const targetDate = new Date(
-    today.getFullYear() + 1,
-    today.getMonth(),
-    today.getDay()
-  );
-  const initialTodos: Todo[] = [
-    { id: 1, description: "Learn AWS", done: false, targetDate: targetDate },
-    { id: 2, description: "Learn GCP", done: false, targetDate: targetDate },
-    { id: 3, description: "Learn Flask", done: false, targetDate: targetDate },
-    {
-      id: 4,
-      description: "Learn Spring Boot",
-      done: false,
-      targetDate: targetDate,
-    },
-  ];
+  
+  const initialTodos: Todo[] = [];
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
   return (
     <Context.Provider value={{ todos, setTodos }}>{children}</Context.Provider>
