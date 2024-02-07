@@ -21,11 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className + " text-text bg-background"}>
         <div className="app flex flex-col gap-4 h-screen">
-          <TheHeader />
           <Providers>
+            <TheHeader />
             <main className="flex-grow">{children}</main>
+            <TheFooter />
           </Providers>
-          <TheFooter />
         </div>
       </body>
     </html>

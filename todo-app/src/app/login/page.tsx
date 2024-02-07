@@ -1,32 +1,28 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
+import { useAuthContext } from "@/context/AuthProvider";
+
+export type successType = 0 | 1 | 2 | 3; // unset, success, username fail, password fail
+export type error = {
+  message: string;
+  errorCode: successType;
+};
 
 export default function Home() {
-  type successType = 0 | 1 | 2 | 3; // unset, success, username fail, password fail
-  type error = {
-    message: string;
-    errorCode: successType;
-  };
-
   const [form, setForm] = useState({
     username: "",
     password: "",
   });
+
+  const { login } = useAuthContext();
 
   const router = useRouter();
 
   const [success, setSuccess] = useState<successType>(0);
 
   function handleSignIn() {
-    if (form.username === "stixbunny" && form.password === "password") {
-      setSuccess(1);
-      router.push('/welcome');
-    } else if (form.username === "stixbunny") {
-      setSuccess(3);
-    } else {
-      setSuccess(2);
-    }
+    setSuccess(login(form.username, form.password));
   }
 
   function CustomErrorMessage(error: error) {
@@ -48,6 +44,12 @@ export default function Home() {
       );
     }
   }
+
+  useEffect(() => {
+    if (success === 1) {
+      router.push("/welcome");
+    }
+  }, [router, success]);
 
   return (
     <div className="w-full max-w-xs mx-auto">
