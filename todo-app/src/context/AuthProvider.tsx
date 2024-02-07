@@ -20,6 +20,7 @@ type AuthState = {
   setAuthenticated: Dispatch<SetStateAction<boolean>>;
   login: (username: string, password: string) => successType;
   logout: () => void;
+  username: string;
 };
 
 const Context = createContext<AuthState | undefined>(undefined);
@@ -27,10 +28,12 @@ const Context = createContext<AuthState | undefined>(undefined);
 export function AuthProvider({ children }: Props) {
   const [number, setNumber] = useState<number>(0);
   const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
 
   function login(username: string, password: string): successType {
     if (username === "stixbunny" && password === "password") {
       setAuthenticated(true);
+      setUsername("stixbunny");
       return 1;
     } else if (username === "stixbunny") {
       setAuthenticated(false);
@@ -43,6 +46,7 @@ export function AuthProvider({ children }: Props) {
 
   function logout() {
     setAuthenticated(false);
+    setUsername("");
   }
 
   return (
@@ -54,6 +58,7 @@ export function AuthProvider({ children }: Props) {
         setAuthenticated,
         login,
         logout,
+        username,
       }}
     >
       {children}

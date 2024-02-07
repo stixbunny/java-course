@@ -15,7 +15,8 @@ export async function fetchHelloWorldBean() {
 
 export async function fetchTodos(username: string): Promise<Todo[]> {
   const json = await fetchJson(`http://localhost:8080/users/${username}/todos`);
-  return json;
+  if (json) return json;
+  return [];
 }
 
 export async function deleteTodo(username: string, id: number) {

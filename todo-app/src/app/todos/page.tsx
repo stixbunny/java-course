@@ -2,21 +2,25 @@
 import { useTodosContext } from "@/context/TodosProvider";
 import { useCallback, useEffect } from "react";
 import { fetchTodos, deleteTodo as deleteTodoApi } from "../util/fetchFromApi";
+import { useAuthContext } from "@/context/AuthProvider";
+import Todo from "./components/todo";
 
 export default function Todos() {
   const { todos, setTodos } = useTodosContext();
 
-  async function deleteTodo(id: number) {
-    await deleteTodoApi("in28minutes", id);
+  let { username } = useAuthContext();
+
+  const deleteTodo = async (id: number) => {
+    await deleteTodoApi(username, id);
     refresh();
-  }
+  };
 
   const refresh = useCallback(() => {
     (async () => {
-      const newTodos = await fetchTodos("in28minutes");
+      const newTodos = await fetchTodos(username);
       setTodos(newTodos);
     })();
-  }, [setTodos]);
+  }, [setTodos, username]);
 
   useEffect(() => {
     refresh();
@@ -42,23 +46,7 @@ export default function Todos() {
         <tbody>
           {todos.map((t) => (
             <tr key={t.id}>
-              <td className="border border-borderhigh p-3 bg-backgroundmid">
-                {t.description}
-              </td>
-              <td className="border border-borderhigh p-3 bg-backgroundmid">
-                {t.done.toString()}
-              </td>
-              <td className="border border-borderhigh p-3 bg-backgroundmid">
-                {new Date(t.targetDate).toLocaleDateString("es-CL")}
-              </td>
-              <td className="border border-borderhigh p-3 bg-backgroundmid">
-                <button
-                  className="py-2 px-4 rounded text-text font-bold bg-red-500 hover:bg-red-800"
-                  onClick={() => deleteTodo(t.id)}
-                >
-                  Delete
-                </button>
-              </td>
+              <Todo todo={t} deleteTodo={deleteTodo} />
             </tr>
           ))}
         </tbody>
