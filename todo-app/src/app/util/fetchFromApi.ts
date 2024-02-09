@@ -32,3 +32,7 @@ export async function fetchTodo(username: string, id: number) {
   if (json) return json;
   return null;
 }
+
+export async function updateTodo(username: string, id: number, todo: Todo) {
+  
+}

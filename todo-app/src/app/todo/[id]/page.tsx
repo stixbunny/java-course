@@ -2,9 +2,10 @@
 
 import { fetchTodo } from "@/app/util/fetchFromApi";
 import { useAuthContext } from "@/context/AuthProvider";
-import Todo from "@/types/todo";
 import { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import Todo from "@/types/todo";
+import { useRouter } from "next/navigation";
 
 interface Params {
   params: {
@@ -17,9 +18,15 @@ interface formValues {
   targetDate: string;
 }
 
+interface formErrors {
+  description?: string;
+  targetDate?: string;
+}
+
 export default function Todo({ params }: Params) {
   const { username } = useAuthContext();
   const [todo, setTodo] = useState<Todo | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -29,12 +36,22 @@ export default function Todo({ params }: Params) {
   }, [params.id, username]);
 
   function updateTodo(values: formValues) {
-    console.log(values);
+    console.log("Updating todo...");
+    const updatedTodo: Todo = {
+      id: params.id,
+      username: username,
+      description: values.description,
+      targetDate: values.targetDate,
+      done: false,
+    };
+
+    console.log(updatedTodo);
+    router.push("/todos");
   }
 
   function validate(values: formValues) {
     console.log("Validating...");
-    let errors: formValues = { description: "", targetDate: "" };
+    let errors: formErrors = {};
     if (values.description.length < 5) {
       errors.description = "Enter at least 5 characters.";
     }
