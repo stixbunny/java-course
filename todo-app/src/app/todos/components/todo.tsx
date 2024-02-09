@@ -23,7 +23,8 @@ export default function Todo({ todo, deleteTodo }: Props) {
         {todo.done.toString()}
       </td>
       <td className="border border-borderhigh p-3 bg-backgroundmid">
-        {new Date(todo.targetDate).toLocaleDateString("es-CL")}
+        {/* {new Date(todo.targetDate).toLocaleDateString("es-CL")} */}
+        {(new Date(todo.targetDate)).toLocaleDateString()}
       </td>
       <td className="p-3 border border-borderhigh bg-backgroundmid">
         <div className="flex flex-row gap-3">

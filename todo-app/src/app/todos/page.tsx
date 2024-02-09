@@ -26,6 +26,8 @@ export default function Todos() {
     refresh();
   }, [refresh]);
 
+  console.log(todos);
+
   return (
     <div className="align-middle">
       <table className="mx-auto table-auto border-collapse border border-slate-500">
