@@ -24,6 +24,12 @@ export default function Todo({ todo, deleteTodo }: Props) {
         >
           Delete
         </button>
+        <button
+          className="py-2 px-4 rounded text-text font-bold bg-yellow-500 hover:bg-yellow-800"
+          onClick={() => deleteTodo(todo.id)}
+        >
+          Update
+        </button>
       </td>
     </>
   );
