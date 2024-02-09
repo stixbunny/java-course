@@ -24,3 +24,11 @@ export async function deleteTodo(username: string, id: number) {
     `http://localhost:8080/users/${username}/todos/${id}`
   );
 }
+
+export async function fetchTodo(username: string, id: number) {
+  const json = await fetchJson(
+    `http://localhost:8080/users/${username}/todos/${id}`
+  );
+  if (json) return json;
+  return null;
+}
