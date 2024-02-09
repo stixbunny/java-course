@@ -4,9 +4,11 @@ import { useCallback, useEffect } from "react";
 import { fetchTodos, deleteTodo as deleteTodoApi } from "../util/fetchFromApi";
 import { useAuthContext } from "@/context/AuthProvider";
 import Todo from "./components/todo";
+import { useRouter } from "next/navigation";
 
 export default function Todos() {
   const { todos, setTodos } = useTodosContext();
+  const router = useRouter();
 
   let { username } = useAuthContext();
 
@@ -14,6 +16,10 @@ export default function Todos() {
     await deleteTodoApi(username, id);
     refresh();
   };
+
+  function addNewTodo() {
+    router.push("/todo");
+  }
 
   const refresh = useCallback(() => {
     (async () => {
@@ -29,7 +35,7 @@ export default function Todos() {
   console.log(todos);
 
   return (
-    <div className="align-middle">
+    <div className="flex flex-col gap-4 max-w-3xl mx-auto justify-center">
       <table className="mx-auto table-auto border-collapse border border-slate-500">
         <thead>
           <tr>
@@ -53,6 +59,13 @@ export default function Todos() {
           ))}
         </tbody>
       </table>
+      <button
+        className="mx-auto bg-blue-500 hover:bg-blue-700 text-white font-bold  py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="button"
+        onClick={addNewTodo}
+      >
+        Add New Todo
+      </button>
     </div>
   );
 }
