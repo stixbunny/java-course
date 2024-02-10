@@ -1,5 +1,11 @@
-import Todo from "@/types/todo";
-import { fetchDelete, fetchJson, fetchWithErrors } from "./customFetch";
+import Todo, { NewTodo } from "@/types/todo";
+import {
+  fetchDelete,
+  fetchJson,
+  fetchPost,
+  fetchPut,
+  fetchWithErrors,
+} from "./customFetch";
 
 export async function fetchHelloPath(variable: string) {
   const json = await fetchJson(
@@ -20,7 +26,7 @@ export async function fetchTodos(username: string): Promise<Todo[]> {
 }
 
 export async function deleteTodo(username: string, id: number) {
-  const response = fetchDelete(
+  const response = await fetchDelete(
     `http://localhost:8080/users/${username}/todos/${id}`
   );
 }
@@ -33,6 +39,21 @@ export async function fetchTodo(username: string, id: number) {
   return null;
 }
 
-export async function updateTodo(username: string, id: number, todo: Todo) {
-  
+export async function fetchUpdateTodo(
+  username: string,
+  id: number,
+  todo: Todo
+) {
+  const response = await fetchPut(
+    `http://localhost:8080/users/${username}/todos/${id}`,
+    JSON.stringify(todo)
+  );
+}
+
+export async function fetchCreateTodo(username: string, todo: NewTodo) {
+  const response = await fetchPost(
+    `http://localhost:8080/users/${username}/todos`,
+    true,
+    JSON.stringify(todo)
+  );
 }

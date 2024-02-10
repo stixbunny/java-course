@@ -5,3 +5,10 @@ export default interface Todo {
   targetDate: string;
   done: boolean;
 }
+
+export interface NewTodo {
+  username: string;
+  description: string;
+  targetDate: string;
+  done: boolean;
+}
