@@ -2,7 +2,8 @@ export async function fetchWithErrors(
   url: string,
   method = "GET",
   hasBody = false,
-  body = ""
+  body = "",
+  auth = "Basic c3RpeGJ1bm55OnBhc3N3b3Jk"
 ) {
   console.log("calling api...");
   try {
@@ -11,10 +12,18 @@ export async function fetchWithErrors(
       response = await fetch(url, {
         method: method,
         body: body,
-        headers: new Headers({ "content-type": "application/json" }),
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Authorization: auth,
+        }),
       });
     } else {
-      response = await fetch(url, { method: method });
+      response = await fetch(url, {
+        method: method,
+        headers: new Headers({
+          Authorization: auth,
+        }),
+      });
     }
     if (!response.ok) {
       console.log("There was an error in the response from the API");
