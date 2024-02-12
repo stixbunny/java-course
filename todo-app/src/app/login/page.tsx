@@ -1,13 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { redirect, useRouter } from "next/navigation";
-import { useAuthContext } from "@/context/AuthProvider";
-
-export type successType = 0 | 1 | 2 | 3; // unset, success, username fail, password fail
-export type error = {
-  message: string;
-  errorCode: successType;
-};
+import { useRouter } from "next/navigation";
+import { useAuthAndFetchContext } from "@/context/AuthAndFetchProvider";
 
 export default function Home() {
   const [form, setForm] = useState({
@@ -15,28 +9,28 @@ export default function Home() {
     password: "",
   });
 
-  const { login } = useAuthContext();
+  const { login } = useAuthAndFetchContext();
 
   const router = useRouter();
 
-  const [success, setSuccess] = useState<successType>(0);
+  const [success, setSuccess] = useState<boolean | null>(null);
 
-  function handleSignIn() {
-    setSuccess(login(form.username, form.password));
+  async function handleSignIn() {
+    setSuccess(await login(form.username, form.password));
   }
 
-  function CustomErrorMessage(error: error) {
-    if (success === error.errorCode) {
+  function ErrorMessage() {
+    if (success === false) {
       return (
         <div className="errorMessage text-red-500 text-xs italic">
-          {error.message}
+          Authentication error, please check your credentials.
         </div>
       );
     }
   }
 
   function SuccessMessage() {
-    if (success === 1) {
+    if (success === true) {
       return (
         <div className="successMessage text-blue-500 text-xs italic font-bold">
           Authenticated successfully!
@@ -46,7 +40,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (success === 1) {
+    if (success === true) {
       router.push("/welcome");
     }
   }, [router, success]);
@@ -58,6 +52,7 @@ export default function Home() {
         className="flex flex-col gap-4 bg-white shadow-md rounded p-6 mb-4"
       >
         <SuccessMessage />
+        <ErrorMessage />
         <div className="flex flex-col gap-2">
           <label
             className="block text-gray-700 text-sm font-bold"
@@ -73,7 +68,6 @@ export default function Home() {
             onChange={(e) => setForm({ ...form, username: e.target.value })}
             value={form.username}
           />
-          <CustomErrorMessage message="Wrong username." errorCode={2} />
         </div>
 
         <div className="flex flex-col gap-2">
@@ -91,7 +85,6 @@ export default function Home() {
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             value={form.password}
           />
-          <CustomErrorMessage message="Wrong password." errorCode={3} />
         </div>
         <div className="flex items-center justify-between gap-2">
           <button

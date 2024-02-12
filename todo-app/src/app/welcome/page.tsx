@@ -1,8 +1,9 @@
 "use client";
 
-import { useAuthContext } from "@/context/AuthProvider";
+import { useAuthAndFetchContext } from "@/context/AuthAndFetchProvider";
+
 export default function Welcome() {
-  const { username } = useAuthContext();
+  const { username } = useAuthAndFetchContext();
 
   return <div className="">Welcome {username}!</div>;
 }

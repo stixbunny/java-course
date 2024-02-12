@@ -1,14 +1,12 @@
 "use client";
 
+import { useAuthAndFetchContext } from "@/context/AuthAndFetchProvider";
 import { useState } from "react";
-import {
-  fetchHelloPath,
-  fetchHelloWorldBean,
-  fetchTodos,
-} from "./util/fetchFromApi";
 
 export default function Home() {
   const [message, setMessage] = useState("");
+
+  const { fetchHelloPath } = useAuthAndFetchContext();
 
   async function callApi() {
     // const message = await fetchHelloWorldBean();

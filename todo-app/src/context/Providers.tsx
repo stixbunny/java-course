@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import { TodosProvider } from "./TodosProvider";
-import { AuthProvider } from "./AuthProvider";
+import { AuthAndFetchProvider } from "./AuthAndFetchProvider";
 
 type Props = {
   children: ReactNode;
@@ -11,7 +11,7 @@ type Props = {
 export function Providers({ children }: Props) {
   return (
     <TodosProvider>
-      <AuthProvider>{children}</AuthProvider>
+      <AuthAndFetchProvider>{children}</AuthAndFetchProvider>
     </TodosProvider>
   );
 }

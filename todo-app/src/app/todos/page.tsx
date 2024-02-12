@@ -1,16 +1,19 @@
 "use client";
 import { useTodosContext } from "@/context/TodosProvider";
 import { useCallback, useEffect } from "react";
-import { fetchTodos, deleteTodo as deleteTodoApi } from "../util/fetchFromApi";
-import { useAuthContext } from "@/context/AuthProvider";
 import Todo from "./components/todo";
 import { useRouter } from "next/navigation";
+import { useAuthAndFetchContext } from "@/context/AuthAndFetchProvider";
 
 export default function Todos() {
   const { todos, setTodos } = useTodosContext();
   const router = useRouter();
 
-  let { username } = useAuthContext();
+  const {
+    username,
+    fetchTodos,
+    deleteTodo: deleteTodoApi,
+  } = useAuthAndFetchContext();
 
   const deleteTodo = async (id: number) => {
     await deleteTodoApi(username, id);

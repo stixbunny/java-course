@@ -1,11 +1,10 @@
 "use client";
 
-import { fetchTodo, fetchUpdateTodo } from "@/app/util/fetchFromApi";
-import { useAuthContext } from "@/context/AuthProvider";
 import { useEffect, useState } from "react";
 import Todo from "@/types/todo";
 import { useRouter } from "next/navigation";
 import TodoForm from "../components/todoForm";
+import { useAuthAndFetchContext } from "@/context/AuthAndFetchProvider";
 
 interface Params {
   params: {
@@ -19,7 +18,7 @@ interface formValues {
 }
 
 export default function Todo({ params }: Params) {
-  const { username } = useAuthContext();
+  const { username, fetchTodo, fetchUpdateTodo } = useAuthAndFetchContext();
   const [todo, setTodo] = useState<Todo | null>(null);
   const router = useRouter();
 

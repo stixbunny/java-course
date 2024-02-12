@@ -1,10 +1,9 @@
 "use client";
+import { useAuthAndFetchContext } from "@/context/AuthAndFetchProvider";
 import Link from "next/link";
-import { useAuthContext } from "@/context/AuthProvider";
-import { useTodosContext } from "@/context/TodosProvider";
 
 export default function TheHeader() {
-  const { isAuthenticated } = useAuthContext();
+  const { isAuthenticated } = useAuthAndFetchContext();
 
   return (
     <header className="w-100 flex flex-row items-center gap-4 justify-between border border-borderhigh bg-backgroundmid">

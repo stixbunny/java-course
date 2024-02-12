@@ -1,9 +1,9 @@
 "use client";
-import { useAuthContext } from "@/context/AuthProvider";
+import { useAuthAndFetchContext } from "@/context/AuthAndFetchProvider";
 import { useEffect } from "react";
 
 export default function Logout() {
-  const { logout } = useAuthContext();
+  const { logout } = useAuthAndFetchContext();
 
   useEffect(() => {
     logout();

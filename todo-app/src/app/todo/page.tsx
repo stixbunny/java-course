@@ -1,10 +1,9 @@
 "use client";
 
-import { fetchCreateTodo, fetchTodo } from "@/app/util/fetchFromApi";
-import { useAuthContext } from "@/context/AuthProvider";
 import Todo, { NewTodo } from "@/types/todo";
 import { useRouter } from "next/navigation";
 import TodoForm from "./components/todoForm";
+import { useAuthAndFetchContext } from "@/context/AuthAndFetchProvider";
 
 interface formValues {
   description: string;
@@ -12,7 +11,7 @@ interface formValues {
 }
 
 export default function Todo() {
-  const { username } = useAuthContext();
+  const { username, fetchCreateTodo } = useAuthAndFetchContext();
   const router = useRouter();
 
   async function createTodo(values: formValues) {
@@ -29,7 +28,5 @@ export default function Todo() {
     router.push("/todos");
   }
 
-  return (
-    <TodoForm description="" targetDate="" onSubmit={createTodo}/>
-  );
+  return <TodoForm description="" targetDate="" onSubmit={createTodo} />;
 }
