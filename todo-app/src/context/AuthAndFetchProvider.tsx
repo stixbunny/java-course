@@ -41,14 +41,15 @@ export function AuthAndFetchProvider({ children }: Props) {
   const [token, setToken] = useState<string>("");
 
   async function login(username: string, password: string): Promise<boolean> {
-    const authToken = "Basic " + window.btoa(`${username}:${password}`);
     console.log(`Connecting with ${token}...`);
     try {
-      const response = await basicAuth(authToken);
+      const response = await jwtAuth(username, password);
       if (response?.status === 200) {
+        const tokenString = await response.json();
+        const jwtToken = `Bearer ${tokenString.token}`;
         setAuthenticated(true);
         setUsername("stixbunny");
-        setToken(authToken);
+        setToken(jwtToken);
         console.log("Connected successfully");
         return true;
       } else {
@@ -66,6 +67,7 @@ export function AuthAndFetchProvider({ children }: Props) {
   function logout() {
     setAuthenticated(false);
     setUsername("");
+    setToken("");
   }
 
   async function fetchWithErrors(
@@ -181,6 +183,21 @@ export function AuthAndFetchProvider({ children }: Props) {
       "",
       authToken
     );
+  }
+
+  async function jwtAuth(username: string, password: string) {
+    const creds = {
+      username: username,
+      password: password,
+    };
+    const response = await fetchWithErrors(
+      "http://localhost:8080/authenticate",
+      "POST",
+      true,
+      JSON.stringify(creds)
+    );
+
+    return response;
   }
 
   return (

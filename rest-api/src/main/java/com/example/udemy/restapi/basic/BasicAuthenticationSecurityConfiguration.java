@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 // stateless rest api, no csrf, no session, authenticate all requests
 
-@Configuration
+// @Configuration
 public class BasicAuthenticationSecurityConfiguration {
 
   @Bean
