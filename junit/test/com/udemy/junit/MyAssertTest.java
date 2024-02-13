@@ -1,18 +1,23 @@
 package com.udemy.junit;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 class MyAssertTest {
 
-  @Test
-  void test() {
-    assertEquals(6, math.arraySum(new int[] { 1, 2, 3 }));
-  }
+  List<String> todos = Arrays.asList("AWS", "Azure", "DevOps");
 
   @Test
-  void testArraySumEmpty() {
-    assertEquals(0, math.arraySum(new int[] {}));
+  void test() {
+    boolean test = todos.contains("AWS");
+    assertEquals(true, test);
+    assertTrue(test);
+    assertEquals(3, todos.size());
   }
+
 }
