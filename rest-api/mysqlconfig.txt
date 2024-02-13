@@ -1,0 +1,6 @@
+--env MYSQL_ROOT_PASSWORD=password
+--env MYSQL_USER=stixbunny
+--env MYSQL_PASSWORD=password
+--env MYSQL_DATABASE=todos
+--name mysql
+--publish 3306:3306 mysql:latest
