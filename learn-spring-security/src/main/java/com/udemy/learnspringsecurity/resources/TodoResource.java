@@ -23,14 +23,14 @@ public class TodoResource {
   }
 
   @GetMapping("/users/{username}/todos")
-  public List<Todo> getUserTodos(@PathVariable String username) {
+  public List<Todo> getUserTodos(@PathVariable("username") String username) {
     return TODOS_LIST.stream().filter(todo -> todo.username().equals(username)).toList();
   }
 
   @PostMapping("/users/{username}/todos")
-  public void createUserTodo(@PathVariable String username, @RequestBody Todo todo) {
+  public void createUserTodo(@PathVariable("username") String username, @RequestBody Todo todo) {
     logger.info("Create {} for {}", todo, username);
-    TODOS_LIST.add(todo);
+    // TODOS_LIST.add(todo);
   }
 
 }
