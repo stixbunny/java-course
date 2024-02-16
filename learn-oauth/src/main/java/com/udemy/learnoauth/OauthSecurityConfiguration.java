@@ -15,11 +15,11 @@ public class OauthSecurityConfiguration {
   @Order(SecurityProperties.BASIC_AUTH_ORDER)
   SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(
-      auth -> {
-        auth.anyRequest().authenticated();
-      }
-      );
+        auth -> {
+          auth.anyRequest().authenticated();
+        });
     http.oauth2Login(Customizer.withDefaults());
+    return http.build();
   }
 
 }
