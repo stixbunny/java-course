@@ -16,6 +16,13 @@ public class BusinessService1 {
 
   public int calculateMax() {
     int[] data = dataService1.retrieveData();
+
+    try {
+      Thread.sleep(30);
+    } catch (InterruptedException ex) {
+      ex.printStackTrace();
+    }
+
     return Arrays.stream(data).max().orElse(0);
   }
 }
