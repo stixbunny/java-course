@@ -1,8 +1,9 @@
-FROM openjdk:21-slim
-COPY target/*.jar app.jar
+FROM maven:3.9.6-eclipse-temurin-21 AS build
+WORKDIR /home/app
+COPY . /home/app
+RUN mvn -f /home/app/pom.xml clean package
+
+FROM eclipse-temurin:21-jdk
 EXPOSE 5000
-ENTRYPOINT ["java","-jar","/app.jar"]
-
-# docker build -t stixbunny/java-hello-world-docker:v2 .
-
-# docker run -d -p 5000:5000 stixbunny/java-hello-world-docker:v2
+COPY --from=build /home/app/target/*.jar app.jar
+ENTRYPOINT [ "sh", "-c", "java -jar /app.jar" ]
